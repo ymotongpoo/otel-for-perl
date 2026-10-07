@@ -1,0 +1,6 @@
+out/*
+!out/.gitkeep
+frontend/local/
+logs/local/
+__pycache__/
+*.pyc

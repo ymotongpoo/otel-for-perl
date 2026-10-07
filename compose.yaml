@@ -1,0 +1,55 @@
+name: yapc-perl-otel
+
+services:
+  frontend:
+    build: ./frontend
+    init: true
+    command: ${FRONTEND_CMD:-plackup -E deployment -s HTTP::Server::PSGI -p 5000 app_otel.psgi}
+    environment:
+      OTEL_SERVICE_NAME: report
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://collector:4318
+      RATES_URL: http://backend:8080
+      PUMP_INTERVAL: ${PUMP_INTERVAL:-}
+      SHUTDOWN_HOOK: ${SHUTDOWN_HOOK:-}
+      RATES_KEEP_ALIVE: ${RATES_KEEP_ALIVE:-1}
+    ports:
+      - "5000:5000"
+    depends_on: [backend, collector]
+
+  backend:
+    build: ./backend
+    environment:
+      OTEL_SERVICE_NAME: rates
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://collector:4318
+    depends_on: [collector]
+
+  collector:
+    image: otel/opentelemetry-collector-contrib:0.162.0
+    volumes:
+      - ./collector/config.yaml:/etc/otelcol-contrib/config.yaml:ro
+      - ./out:/data
+    depends_on: [lgtm]
+
+  lgtm:
+    image: grafana/otel-lgtm:0.32.1
+    ports:
+      - "3300:3000"
+
+  # E7だけで使う。docker compose --profile obi up -d obi
+  obi:
+    image: otel/ebpf-instrument:v0.14.0
+    profiles: [obi]
+    privileged: true
+    pid: host
+    volumes:
+      # このカーネル（7.0.0）ではFIONREADの補正にtracefsが要る。無いとOBIは伝搬を自動で無効にする
+      - /sys/kernel/tracing:/sys/kernel/tracing
+      # OBIの起動後に張られた接続にtraceparentを書き込むには、ホストのcgroupが見えている必要がある
+      - /sys/fs/cgroup:/sys/fs/cgroup
+    environment:
+      OTEL_EBPF_OPEN_PORT: "5000"
+      OTEL_EBPF_AUTO_TARGET_EXE: "*/perl"
+      OTEL_EBPF_BPF_CONTEXT_PROPAGATION: ${OBI_PROPAGATION:-headers}
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://collector:4318
+      OTEL_EBPF_TRACE_PRINTER: ${OBI_PRINTER:-disabled}
+    depends_on: [collector]

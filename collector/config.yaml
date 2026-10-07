@@ -1,0 +1,32 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+      http:
+        endpoint: 0.0.0.0:4318
+
+processors:
+  batch: {}
+
+exporters:
+  # 受け取ったOTLPをそのままJSON Linesで保存する。検証はこのファイルで行う
+  file:
+    path: /data/otlp.jsonl
+  otlphttp/lgtm:
+    endpoint: http://lgtm:4318
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [file, otlphttp/lgtm]
+    logs:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [file, otlphttp/lgtm]
+    metrics:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [file, otlphttp/lgtm]
