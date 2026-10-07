@@ -1,0 +1,81 @@
+.gitignore
+  s_ff65d3f1cc7ef1::t_5736b980caabba 1-6
+backend/Dockerfile
+  s_ff65d3f1cc7ef1::t_10b94267ac14ef 1-10
+backend/go.mod
+  s_ff65d3f1cc7ef1::t_e307169c724b43 1-33
+backend/go.sum
+  s_ff65d3f1cc7ef1::t_e5563b056ee986 1-63
+backend/main.go
+  s_ff65d3f1cc7ef1::t_9e1ead73f978df 1-53
+collector/config.yaml
+  s_ff65d3f1cc7ef1::t_8addf289ffa081 1-32
+compose.yaml
+  s_ff65d3f1cc7ef1::t_52697c7f4014eb 1-55
+experiments/check_obi.py
+  s_ff65d3f1cc7ef1::t_3bdb2adcdc2101 1-49
+experiments/check_traces.py
+  s_ff65d3f1cc7ef1::t_695b11e7234c8d 1-29
+experiments/count_spans.py
+  s_ff65d3f1cc7ef1::t_11413615f83843 1-11
+experiments/e2_api_only.pl
+  s_ff65d3f1cc7ef1::t_ac19f7da04e013 1-11
+experiments/e2_sdk.pl
+  s_ff65d3f1cc7ef1::t_2a8dd7cec4dc70 1-12
+experiments/e6_shutdown.pl
+  s_ff65d3f1cc7ef1::t_63851969823d49 1-16
+experiments/load.sh
+  s_ff65d3f1cc7ef1::t_2c5fe72690bc99 1-4
+experiments/reset.sh
+  s_ff65d3f1cc7ef1::t_e783a4e8159438 1-13
+experiments/run-perl.sh
+  s_ff65d3f1cc7ef1::t_b69cb15acbe011 1-3
+experiments/trace_tree.py
+  s_ff65d3f1cc7ef1::t_82ef7410e75db7 1-50
+frontend/.dockerignore
+  s_ff65d3f1cc7ef1::t_e7ee6e8e023cc5 1
+frontend/Dockerfile
+  s_ff65d3f1cc7ef1::t_8b6cef22ce18fc 1-10
+frontend/app.psgi
+  s_ff65d3f1cc7ef1::t_addab9eac53d8f 1-23
+frontend/app_async.psgi
+  s_ff65d3f1cc7ef1::t_8e67e2e128a62f 1-33
+frontend/app_otel.psgi
+  s_ff65d3f1cc7ef1::t_74288ba13d171e 1-37
+frontend/app_otel_pump.psgi
+  s_ff65d3f1cc7ef1::t_4144a1020d1118 1-19
+frontend/app_otel_simple.psgi
+  s_ff65d3f1cc7ef1::t_68638733b1b787 1-17
+frontend/cpanfile
+  s_ff65d3f1cc7ef1::t_5d6509718cf6d1 1-9
+frontend/cpanfile.snapshot
+  s_ff65d3f1cc7ef1::t_4ec3bb89b242fb 1-1453
+frontend/lib/Demo/OTelPump.pm
+  s_ff65d3f1cc7ef1::t_40df2c32096219 1-28
+frontend/lib/Demo/Report.pm
+  s_ff65d3f1cc7ef1::t_d2775ee6e80678 1-24
+logs/cpanfile
+  s_ff65d3f1cc7ef1::t_0784dfd373cbd7 1-6
+logs/cpanfile.snapshot
+  s_ff65d3f1cc7ef1::t_19358bfb1a15b3 1-832
+logs/e5_logs.pl
+  s_ff65d3f1cc7ef1::t_9895de00076277 1-17
+README.md
+  s_ff65d3f1cc7ef1::t_e6c3a96576db17 1-104
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "abc67113233fe3f1f3eb9e4f01d6f9f25ff40e75",
+  "prompts": {},
+  "sessions": {
+    "s_ff65d3f1cc7ef1": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "afb5e511-29a5-465f-8c60-b7af60da667d",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Yoshi Yamaguchi <ymotongpoo@gmail.com>"
+    }
+  }
+}
