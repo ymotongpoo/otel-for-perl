@@ -1,0 +1,34 @@
+frontend/cpanfile.snapshot
+  s_ff65d3f1cc7ef1::t_4ec3bb89b242fb 851-877
+experiments/e6_shutdown.pl
+  s_ff65d3f1cc7ef1::t_63851969823d49 3
+  s_ff65d3f1cc7ef1::t_5a9628478db54f 17-19
+frontend/cpanfile
+  s_ff65d3f1cc7ef1::t_5d6509718cf6d1 2
+experiments/e5_logs.pl
+  s_ff65d3f1cc7ef1::t_9895de00076277 15
+frontend/app_otel_pump.psgi
+  s_ff65d3f1cc7ef1::t_4144a1020d1118 10
+  s_ff65d3f1cc7ef1::t_18221b0273c256 11-12
+README.md
+  s_ff65d3f1cc7ef1::t_e6c3a96576db17 83,86,89-94,97,100
+  s_ff65d3f1cc7ef1::t_b1777bd01ffdf0 62
+compose.yaml
+  s_ff65d3f1cc7ef1::t_680f0c951f7a49 11
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "2a2e531093c13e558afd885fd5716e704a7c2bcb",
+  "prompts": {},
+  "sessions": {
+    "s_ff65d3f1cc7ef1": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "afb5e511-29a5-465f-8c60-b7af60da667d",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Yoshi Yamaguchi <ymotongpoo@gmail.com>"
+    }
+  }
+}
