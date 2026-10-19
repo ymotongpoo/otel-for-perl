@@ -12,6 +12,6 @@ $tracer->in_span( report => sub ( $span, $context ) {
 $log->info('outside of any span');
 $log->debugf( 'formatted %s', 'message' );
 
-# 0.029-TRIALのログもBatchプロセッサーなので、明示的に送り出す
+# ログもBatchプロセッサーなので、明示的に送り出す
 printf "logs force_flush=%s\n",   otel_logger_provider->force_flush(3)->get;
 printf "traces force_flush=%s\n", otel_tracer_provider->force_flush(3)->get;

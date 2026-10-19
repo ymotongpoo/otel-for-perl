@@ -8,6 +8,7 @@ services:
     environment:
       OTEL_SERVICE_NAME: report
       OTEL_EXPORTER_OTLP_ENDPOINT: http://collector:4318
+      OTEL_LOGS_EXPORTER: ${OTEL_LOGS_EXPORTER:-}
       RATES_URL: http://backend:8080
       PUMP_INTERVAL: ${PUMP_INTERVAL:-}
       SHUTDOWN_HOOK: ${SHUTDOWN_HOOK:-}

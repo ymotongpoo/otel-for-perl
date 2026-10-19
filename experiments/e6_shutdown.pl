@@ -1,6 +1,6 @@
 use v5.40;
 use OpenTelemetry::SDK;
-use OpenTelemetry 'otel_tracer_provider';
+use OpenTelemetry qw( otel_tracer_provider otel_logger_provider );
 use Time::HiRes 'time';
 
 my $mode = shift // 'shutdown';
@@ -14,3 +14,6 @@ if ( $mode eq 'flush' ) {
 }
 my $r = otel_tracer_provider->shutdown(3)->get;
 printf "shutdown result=%s %.2fs\n", $r, time - $t;
+
+# SDK 0.100では、ログのプロバイダーも止めておかないと、プロセスの終了の途中で止まる
+otel_logger_provider->shutdown(3)->get;

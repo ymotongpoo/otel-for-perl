@@ -848,26 +848,33 @@ DISTRIBUTIONS
       Time::Piece 0
       isa 0
       perl 5.030000
-  OpenTelemetry-SDK-0.028
-    pathname: J/JJ/JJATRIA/OpenTelemetry-SDK-0.028.tar.gz
+  OpenTelemetry-SDK-0.100
+    pathname: J/JJ/JJATRIA/OpenTelemetry-SDK-0.100.tar.gz
     provides:
-      OpenTelemetry::SDK 0.028
-      OpenTelemetry::SDK::Exporter::Console 0.028
-      OpenTelemetry::SDK::InstrumentationScope 0.028
-      OpenTelemetry::SDK::Resource 0.028
-      OpenTelemetry::SDK::Trace::Sampler 0.028
-      OpenTelemetry::SDK::Trace::Sampler::AlwaysOff 0.028
-      OpenTelemetry::SDK::Trace::Sampler::AlwaysOn 0.028
-      OpenTelemetry::SDK::Trace::Sampler::ParentBased 0.028
-      OpenTelemetry::SDK::Trace::Sampler::Result 0.028
-      OpenTelemetry::SDK::Trace::Sampler::TraceIDRatioBased 0.028
-      OpenTelemetry::SDK::Trace::Span 0.028
-      OpenTelemetry::SDK::Trace::Span::Processor::Batch 0.028
-      OpenTelemetry::SDK::Trace::Span::Processor::Simple 0.028
-      OpenTelemetry::SDK::Trace::Span::Readable 0.028
-      OpenTelemetry::SDK::Trace::SpanLimits 0.028
-      OpenTelemetry::SDK::Trace::Tracer 0.028
-      OpenTelemetry::SDK::Trace::TracerProvider 0.028
+      OpenTelemetry::Processor::Batch 0.100
+      OpenTelemetry::Processor::Simple 0.100
+      OpenTelemetry::SDK 0.100
+      OpenTelemetry::SDK::Exporter::Console 0.100
+      OpenTelemetry::SDK::InstrumentationScope 0.100
+      OpenTelemetry::SDK::Logs::LogRecord 0.100
+      OpenTelemetry::SDK::Logs::LogRecord::Processor::Batch 0.100
+      OpenTelemetry::SDK::Logs::LogRecord::Processor::Simple 0.100
+      OpenTelemetry::SDK::Logs::Logger 0.100
+      OpenTelemetry::SDK::Logs::LoggerProvider 0.100
+      OpenTelemetry::SDK::Resource 0.100
+      OpenTelemetry::SDK::Trace::Sampler 0.100
+      OpenTelemetry::SDK::Trace::Sampler::AlwaysOff 0.100
+      OpenTelemetry::SDK::Trace::Sampler::AlwaysOn 0.100
+      OpenTelemetry::SDK::Trace::Sampler::ParentBased 0.100
+      OpenTelemetry::SDK::Trace::Sampler::Result 0.100
+      OpenTelemetry::SDK::Trace::Sampler::TraceIDRatioBased 0.100
+      OpenTelemetry::SDK::Trace::Span 0.100
+      OpenTelemetry::SDK::Trace::Span::Processor::Batch 0.100
+      OpenTelemetry::SDK::Trace::Span::Processor::Simple 0.100
+      OpenTelemetry::SDK::Trace::Span::Readable 0.100
+      OpenTelemetry::SDK::Trace::SpanLimits 0.100
+      OpenTelemetry::SDK::Trace::Tracer 0.100
+      OpenTelemetry::SDK::Trace::TracerProvider 0.100
     requirements:
       Feature::Compat::Try 0
       Future::AsyncAwait 0.38

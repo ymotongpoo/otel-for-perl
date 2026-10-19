@@ -34,7 +34,6 @@ curl 'http://localhost:5000/report?days=7&currency=BRL'    # ratesが遅い
 | `frontend/app_otel_simple.psgi` | `app_otel.psgi` をSimpleプロセッサーで動かす | 4章、5章、6章、8章 |
 | `frontend/app_otel_pump.psgi` | `app_otel.psgi` を `Demo::OTelPump` で包む回避策。`PUMP_INTERVAL` 秒ごとに `force_flush` し、`SHUTDOWN_HOOK=1` で終了時にも `force_flush` する | 8章 |
 | `frontend/app_async.psgi` | Twiggy向けの非同期版。計装していない | 9章 |
-| `logs/` | SDKを0.029-TRIALにした別の依存一式と、ログを送るスクリプト | 7章 |
 
 ## 動かし方
 
@@ -60,6 +59,7 @@ python3 experiments/trace_tree.py out/otlp.jsonl report.days   # トレースの
 Starmanを使うなら、`FRONTEND_CMD="plackup -E deployment -s Starman --workers 4 -p 5000 app_otel_simple.psgi"` のように渡します。
 `--preload-app` は `--preload-app=1` と書いてください。
 plackupは知らないオプションの次の引数をそのオプションの値として扱うので、`--preload-app app_otel.psgi` の順だとPSGIファイルの指定が消え、カレントディレクトリの `app.psgi` が起動します。
+なお、`plackup -s Starman` は `--preload-app` を付けなくてもマスタープロセスでアプリケーションを読み込みます（Plack::Handler::StarmanのPOD）。
 
 ### OBI
 
@@ -74,31 +74,29 @@ python3 experiments/check_obi.py out/otlp.jsonl       # OBIのトレースの親
 カーネルの不具合（commit 929e30f93125）の影響を受けるカーネルでは、tracefsが無いとOBIは文脈の伝搬を自動で止めます。
 cgroupが見えないと、OBIの起動後に張られた接続に `traceparent` が書き込まれません。
 
-### ログ（SDK 0.029-TRIAL）
-
-```sh
-docker run --rm -v "$PWD/logs":/app -w /app perl:5.44.0 sh -c 'cpanm -nq Carton@1.0.35 && carton install'
-docker run --rm --network yapc-perl-otel_default -v "$PWD/logs":/l -w /l \
-  -e PERL5LIB=/l/local/lib/perl5 -e OTEL_SERVICE_NAME=e5-logs \
-  -e OTEL_EXPORTER_OTLP_ENDPOINT=http://collector:4318 perl:5.44.0 perl e5_logs.pl
-```
-
 ### 単体のスクリプト
 
 `experiments/run-perl.sh` は、`frontend` と同じイメージで `experiments/` のスクリプトを動かします。
 
 ```sh
 experiments/run-perl.sh yapc-perl-otel-frontend perl e2_api_only.pl      # APIだけでは何も記録されない
-experiments/run-perl.sh -e OTEL_TRACES_EXPORTER=console yapc-perl-otel-frontend perl e2_sdk.pl
+experiments/run-perl.sh -e OTEL_TRACES_EXPORTER=console -e OTEL_LOGS_EXPORTER=none yapc-perl-otel-frontend perl e2_sdk.pl
 experiments/run-perl.sh -e OTEL_EXPORTER_OTLP_ENDPOINT=http://collector:4318 yapc-perl-otel-frontend perl e6_shutdown.pl         # shutdownだけでは送られない
 experiments/run-perl.sh -e OTEL_EXPORTER_OTLP_ENDPOINT=http://collector:4318 yapc-perl-otel-frontend perl e6_shutdown.pl flush   # force_flushの後なら届く
+experiments/run-perl.sh -e OTEL_EXPORTER_OTLP_ENDPOINT=http://collector:4318 -e OTEL_SERVICE_NAME=e5-logs yapc-perl-otel-frontend perl e5_logs.pl   # ログ
 ```
+
+SDK 0.100は、何も設定しないとトレースとログの両方にBatchプロセッサーを組みます。
+この構成では、SDKを読み込んだプログラムが終了の途中で止まることがあります（`perl -MOpenTelemetry::SDK -e 1` で再現する。[SDKのissue #24](https://github.com/jjatria/perl-opentelemetry-sdk/issues/24)）。
+ログを送らないなら `OTEL_LOGS_EXPORTER=none` を付けてください。
+`e6_shutdown.pl` は、終了する前にログのプロバイダーの `shutdown` を呼んで、これを避けています。
+PSGIサーバーでも同じ理由で停止に10秒以上かかることがあるので、ログを送らないなら `OTEL_LOGS_EXPORTER=none` を付けて起動してください（例：`OTEL_LOGS_EXPORTER=none FRONTEND_CMD=... experiments/reset.sh`）。
 
 ## 検証環境
 
-2026年10月7日に、Linux 7.0.0（x86_64）とDocker 29.0.0で確かめました。
+2026年10月7日と19日に、Linux 7.0.0（x86_64）とDocker 29.0.0で確かめました。SDKを使う測定は、19日にSDK 0.100で取り直しました。
 
 - Perl 5.44.0（`perl:5.44.0`）、Carton 1.0.35
-- OpenTelemetry 0.039、OpenTelemetry::SDK 0.028（ログだけ0.029-TRIAL）、OpenTelemetry::Exporter::OTLP 0.021、Plack::Middleware::OpenTelemetry 0.262410。推移的な依存は `frontend/cpanfile.snapshot` と `logs/cpanfile.snapshot` に固定してある
+- OpenTelemetry 0.039、OpenTelemetry::SDK 0.100、OpenTelemetry::Exporter::OTLP 0.021、Plack::Middleware::OpenTelemetry 0.262410。推移的な依存は `frontend/cpanfile.snapshot` に固定してある
 - Go 1.27.1、OpenTelemetry Go v1.47.0、otelhttp v0.72.0
 - OBI v0.14.0
