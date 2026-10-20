@@ -696,6 +696,21 @@ DISTRIBUTIONS
       perl 5.008001
       strict 0
       warnings 0
+  Net-Async-HTTP-Server-0.15
+    pathname: P/PE/PEVANS/Net-Async-HTTP-Server-0.15.tar.gz
+    provides:
+      Net::Async::HTTP::Server 0.15
+      Net::Async::HTTP::Server::PSGI 0.15
+      Net::Async::HTTP::Server::Protocol 0.15
+      Net::Async::HTTP::Server::Request 0.15
+      Plack::Handler::Net::Async::HTTP::Server 0.15
+    requirements:
+      HTTP::Request 0
+      IO::Async 0.54
+      IO::Async::Listener 0.61
+      Metrics::Any 0.05
+      Module::Build 0.4004
+      perl 5.014
   Net-Server-2.018
     pathname: B/BB/BBB/Net-Server-2.018.tar.gz
     provides:

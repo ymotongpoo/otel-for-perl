@@ -57,6 +57,7 @@ python3 experiments/trace_tree.py out/otlp.jsonl report.days   # トレースの
 ```
 
 Starmanを使うなら、`FRONTEND_CMD="plackup -E deployment -s Starman --workers 4 -p 5000 app_otel_simple.psgi"` のように渡します。
+IO::Asyncのループで動くサーバーなら、`FRONTEND_CMD="plackup -E deployment -s Net::Async::HTTP::Server -p 5000 app_otel.psgi"` です。このサーバーではSDKのBatchプロセッサーの送信が止まりません（本の8章）。
 `--preload-app` は `--preload-app=1` と書いてください。
 plackupは知らないオプションの次の引数をそのオプションの値として扱うので、`--preload-app app_otel.psgi` の順だとPSGIファイルの指定が消え、カレントディレクトリの `app.psgi` が起動します。
 なお、`plackup -s Starman` は `--preload-app` を付けなくてもマスタープロセスでアプリケーションを読み込みます（Plack::Handler::StarmanのPOD）。

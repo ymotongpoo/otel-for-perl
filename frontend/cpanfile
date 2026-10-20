@@ -5,5 +5,6 @@ requires 'Plack::Middleware::OpenTelemetry', '== 0.262410';
 requires 'Plack';
 requires 'Starman';
 requires 'Twiggy';
+requires 'Net::Async::HTTP::Server';
 requires 'AnyEvent::HTTP';
 requires 'JSON::PP';
